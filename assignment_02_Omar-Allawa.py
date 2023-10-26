@@ -1,11 +1,10 @@
 #1
 def CountDigits(number):
-    counter = 0
-    while number != 0:
-        counter += 1
-        number //= 10
-        CountDigits(number)
-    return counter
+    number = abs(number)
+    if number == 0:
+        return 0
+    else:
+        return 1 + CountDigits(number // 10)
 
 #2--------------------------------
 def FindMax(lst):
@@ -40,12 +39,33 @@ def count_tag_occurrences(html, tag):
     remaining_html = html[end_index:]
     return 1 + count_tag_occurrences(remaining_html, tag)
 
+#3.2----------------------------------------------------------------
+def mean(column):
+    return sum(column) / len(column)
 
+def standard_deviation(column):
+    col_mean = mean(column)
+    variance = sum((x - col_mean) ** 2 for x in column) / len(column)
+    return variance ** 0.5
 
-        
+def is_normalized_column(column):
+    return mean(column) == 0 and standard_deviation(column) == 1
 
+def count_normalized_columns(matrix, column_idx=0):
+    if column_idx >= len(matrix[0]):
+        return 0
+
+    column = [row[column_idx] for row in matrix]
+
+    if is_normalized_column(column):
+        return 1 + count_normalized_columns(matrix, column_idx + 1)
+    else:
+        return count_normalized_columns(matrix, column_idx + 1)
+    
+
+    
 def main():
-     user_input = input("Enter your choice : \n 1.Count Digits \n 2.Find Max \n 3.1. Count tags \n 4.Exit\n")
+     user_input = input("Enter your choice : \n 1.Count Digits \n 2.Find Max \n 3.1.Count tags \n 3.2.Count Normalized Columns \n 4.Exit\n")
      if user_input == "1":
          number = int(input("Enter a number : "))
          digit_count = CountDigits(number)
@@ -68,7 +88,22 @@ def main():
          else:
               print("The list is empty.")
               
-     elif user_input == "3":
+     elif user_input == "3.2":
+         matrix = [
+    [-1.2649110640673518, 5.123451, 43],
+    [-0.6324555320336759, 5.13123123, 4334],
+    [0.0, 6.1543453, 125879],
+    [0.6324555320336759, 0.1231235709, 123544],
+    [1.2649110640673518, 9.1543524234, 55676]
+]
+
+         normalized_column_count = count_normalized_columns(matrix)
+         print(f"The number of normalized columns is: {normalized_column_count}")
+      
+     elif user_input == "4":
+         return -1
+         
+     elif user_input == "3.1":
          html = """
 <html>
 <head>
@@ -89,16 +124,13 @@ def main():
 """
 
 # Get the tag from the user
-     tag_to_count = input("Enter the HTML tag to count: ")
+         tag_to_count = input("Enter the HTML tag to count: ")
 
 # Call the function to count tag occurrences
-     occurrences = count_tag_occurrences(html, tag_to_count)
-     print(f"The '{tag_to_count}' tag occurs {occurrences} times in the HTML code.")
-
+         occurrences = count_tag_occurrences(html, tag_to_count)
+         print(f"The '{tag_to_count}' tag occurs {occurrences} times in the HTML code.")
          
-         
-        
-        
+   
      
          
 if __name__ == "__main__":
