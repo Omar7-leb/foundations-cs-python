@@ -30,3 +30,18 @@ def get_highest_score(students):
             highest_score = total_score
             highest_score_name = student['name']
     return highest_score_name
+
+def add_student(students):
+    name = input("Enter student name: ")
+    age = int(input("Enter student age: "))
+    scores = tuple(map(int, input("Enter three exam scores separated by spaces: ").split()))
+    new_student = {"name": name, "age": age, "Scores": scores}
+    students.append(new_student)
+
+def delete_student(students, name_to_delete):
+    updated_students = [student for student in students if student['name'] != name_to_delete]
+    if len(updated_students) == len(students):
+        print("Student not found!")
+    else:
+        print(f"{name_to_delete} was deleted successfully.")
+    return updated_students
