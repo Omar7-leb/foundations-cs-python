@@ -45,3 +45,64 @@ def delete_student(students, name_to_delete):
     else:
         print(f"{name_to_delete} was deleted successfully.")
     return updated_students
+
+def common_students(students, students2):
+    common = []
+    for student in students:
+        for student2 in students2:
+            if student2['name'] == student['name']:
+                common.append(student2['name'])
+    return common
+
+def consistent_improvement_students(students):
+    consistent_students = []
+    for student in students:
+        score = student['Scores']
+        if score[0] < score[1] < score[2]:
+            consistent_students.append(student['name'])
+    return tuple(consistent_students)
+
+def main():
+    students = [
+        {"name": "John", "age": 20, "Scores": (85, 90, 95)},
+        {"name": "Alice", "age": 22, "Scores": (78, 92, 87)},
+        {"name": "Bob", "age": 18, "Scores": (95, 88, 79)},
+        {"name": "Omar", "age": 22, "Scores": (95, 88, 79)}
+    ]
+    students2 = [
+        {"name": "John", "age": 20, "Scores": (85, 90, 75)},
+        {"name": "Bob", "age": 18, "Scores": (95, 88, 79)},
+    ]
+
+    while True:
+        user_input = input("\n1. Get Average Score\n2. Get Youngest Student\n3. Get Highest Score\n4. Add Student\n5. Delete Student\n6. Get Common Students\n7. Find Students with Consistent Improvement\n8. Exit\nEnter your choice: ")
+
+        if user_input == '1':
+            average_scores_dict = calculate_average_scores(students)
+            print("The average of the students:", average_scores_dict)
+        elif user_input == '2':
+            youngest_student_name = get_youngest_student(students)
+            print("The youngest student is:", youngest_student_name)
+        elif user_input == '3':
+            highest_score_name = get_highest_score(students)
+            print("The student with the highest score is:", highest_score_name)
+        elif user_input == '4':
+            add_student(students)
+            print("Student added successfully.")
+        elif user_input == '5':
+            name_to_delete = input("Enter the name of the student to delete: ")
+            students = delete_student(students, name_to_delete)
+        elif user_input == '6':
+            common_students_list = common_students(students, students2)
+            print("The common students are:", common_students_list)
+        elif user_input == '7':
+            students_with_improvement = consistent_improvement_students(students)
+            print("Students with consistent improvement:", students_with_improvement)
+        elif user_input == '8':
+            print("Exiting the program.")
+            break
+        else:
+            print("Invalid choice. Please select a valid option.")
+
+if __name__ == "__main__":
+    main()
