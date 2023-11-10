@@ -1,13 +1,13 @@
-def OpenTab(browser, title, url): #add a new tab to the list of tabs (browser) with title and url
+#1----------------------------------------------------------------
+def open_tab(browser, title, url): #add a new tab to the list of tabs (browser) with title and url
     new_tab = {
         'Title': title,
         'URL': url
     }
     browser.append(new_tab)
     print("Tab with title: " + title + " and url: " + url + " has been opened successfully")
-    print(browser)
-
-def CloseTab(browser, index=None):
+#2----------------------------------------------------------------
+def close_tab(browser, index=None):
     if not browser: # if the list is empty
         raise ValueError("Browser is empty! You cannot close a tab.")
     
@@ -22,6 +22,15 @@ def CloseTab(browser, index=None):
             print("No tabs to close.")
     else: #incorrect input
         print("You should enter a correct index")
+        
+
+#4--------------------------------------------------------
+def print_titles(browser):
+    if not browser:
+        print("No titles to print")
+    else:
+        for item in browser:
+            print(item['Title'])
 
 def main():
     browser = []
@@ -45,6 +54,9 @@ def main():
                 index = None
 
             CloseTab(browser, index)
+            
+        elif user_input == 4:
+            PrintTitles(browser)
             
         elif user_input == 9:
             break
