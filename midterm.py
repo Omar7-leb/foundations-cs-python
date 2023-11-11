@@ -1,10 +1,19 @@
 #1----------------------------------------------------------------
-def open_tab(browser, title, url): #add a new tab to the list of tabs (browser) with title and url
+import validators
+
+def is_valid(url): #ressource: https://stackoverflow.com/questions/7160737/how-to-validate-a-url-in-python-malformed-or-not
+    return validators.url(url)
+
+def open_tab(browser, title, url):
+    if not is_valid(url):
+        print("Invalid URL. Please enter a valid URL.")
+        return
+
     new_tab = {
         'Title': title,
         'URL': url
     }
-    browser.append(new_tab) 
+    browser.append(new_tab)
     print("Tab with title: " + title + " and url: " + url + " has been opened successfully")
 #2----------------------------------------------------------------
 def close_tab(browser, index=None):
