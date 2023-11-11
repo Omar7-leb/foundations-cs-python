@@ -57,10 +57,12 @@ def print_titles(browser):
     if not browser:
         print("No titles to print")
     else:
-        for item in browser:
-            print(item['Title'])
-
-                
+        for tab in browser:
+            print(tab['Title'])
+            nested_tabs = tab.get('NestedTabs', [])
+            for nested_tab in nested_tabs:
+                print(f"  {nested_tab['Title']}")
+           
 #5--------------------------------------------------------
 def Open_nested_tab(browser, parent_index):
     if not browser:
