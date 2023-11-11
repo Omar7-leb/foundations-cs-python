@@ -23,17 +23,38 @@ def close_tab(browser, index=None):
     else: #incorrect input
         print("You should enter a correct index")
         
+#3----------------------------------------------------------------
+# ressources : https://pypi.org/project/beautifulsoup4/  , https://youtu.be/bargNl2WeN4?si=89vXLRg0LHvksZgo
 
-#4--------------------------------------------------------
-def print_titles(browser):
-    if not browser:
-        print("No titles to print")
+from bs4 import BeautifulSoup # library for pulling data out of HTML and XML files
+import requests # library for making HTTP requests
+def DisplayTabContent(browser, index=None):
+    if not browser: #if browser is empty
+        print("No tabs to display")
+        return
+
+    if index is None:
+        index = -1  # Display the last opened tab by default
+
+    if 0 <= index < len(browser):
+        tab = browser[index]
+        url = tab['URL']
+        try:
+            response = requests.get(url) #sends an HTTP GET request to the specified URL
+            response.raise_for_status()  # Check if the request was successful
+            html_content = response.text
+            soup = BeautifulSoup(html_content, 'html.parser') #parse the infos in html format
+            # You can print or process the HTML content as needed
+            print(f"Displaying content of tab at index {index} with title: {tab['Title']}")
+            print(soup.prettify())  # Print prettified HTML content
+        except requests.RequestException as e: # class requests contain all the request exceptions  ressources : https://requests.readthedocs.io/en/latest/_modules/requests/exceptions/
+            print(e)
     else:
-        for item in browser:
-            print(item['Title'])
-
+        print("Invalid index")
+        
 def main():
     browser = []
+    file = "input.txt"
     print("Hello user, choose an option from the following options:")
     while True:
         try:
@@ -45,7 +66,7 @@ def main():
         if user_input == 1:
             title = input("Please enter the title: ")
             url = input("Please enter the url: ")
-            OpenTab(browser, title, url)
+            open_tab(browser, title, url)
         elif user_input == 2:
             try:
                 index = int(input("Please enter the index: "))
@@ -53,10 +74,11 @@ def main():
                 print("Invalid input for the index. Using the default: closing the last tab.")
                 index = None
 
-            CloseTab(browser, index)
+            close_tab(browser, index)
             
-        elif user_input == 4:
-            PrintTitles(browser)
+        elif user_input == 3:
+             index = int(input("Please enter the index to display content (or press Enter for last tab): "))
+             DisplayTabContent(browser, index)
             
         elif user_input == 9:
             break
