@@ -4,7 +4,7 @@ def open_tab(browser, title, url): #add a new tab to the list of tabs (browser) 
         'Title': title,
         'URL': url
     }
-    browser.append(new_tab)
+    browser.append(new_tab) 
     print("Tab with title: " + title + " and url: " + url + " has been opened successfully")
 #2----------------------------------------------------------------
 def close_tab(browser, index=None):
@@ -12,11 +12,11 @@ def close_tab(browser, index=None):
         raise ValueError("Browser is empty! You cannot close a tab.")
     
     if index is not None and 0 <= index < len(browser):
-        browser.pop(index)
+        browser.remove(browser[index])
         print(f"Tab with index {index} has been closed successfully")
     elif index is None: #if the index field is empty
         if browser:
-            browser.pop()
+            browser.remove(browser[-1]) #remove the last tab in the browser
             print("Last tab has been closed successfully")
         else:
             print("No tabs to close.")
@@ -44,7 +44,6 @@ def DisplayTabContent(browser, index=None):
             response.raise_for_status()  # Check if the request was successful
             html_content = response.text
             soup = BeautifulSoup(html_content, 'html.parser') #parse the infos in html format
-            # You can print or process the HTML content as needed
             print(f"Displaying content of tab at index {index} with title: {tab['Title']}")
             print(soup.prettify())  # Print prettified HTML content
         except requests.RequestException as e: # class requests contain all the request exceptions  ressources : https://requests.readthedocs.io/en/latest/_modules/requests/exceptions/
@@ -58,10 +57,10 @@ def print_titles(browser):
         print("No titles to print")
     else:
         for tab in browser:
-            print(tab['Title'])
-            nested_tabs = tab.get('NestedTabs', [])
+            print(tab['Title']) #print the title of parent tab
+            nested_tabs = tab.get('NestedTabs', []) #retrieve the value associated with the key 'NestedTabs' in the dictionary tab 
             for nested_tab in nested_tabs:
-                print(f"  {nested_tab['Title']}")
+                print(f"  {nested_tab['Title']}") #print the title of nested tabs
            
 #5--------------------------------------------------------
 def Open_nested_tab(browser, parent_index):
