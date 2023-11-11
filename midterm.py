@@ -28,7 +28,7 @@ def close_tab(browser, index=None):
 
 from bs4 import BeautifulSoup # library for pulling data out of HTML and XML files
 import requests # library for making HTTP requests
-def DisplayTabContent(browser, index=None):
+def display_tab_content(browser, index=None):
     if not browser: #if browser is empty
         print("No tabs to display")
         return
@@ -63,7 +63,7 @@ def print_titles(browser):
                 print(f"  {nested_tab['Title']}") #print the title of nested tabs
            
 #5--------------------------------------------------------
-def Open_nested_tab(browser, parent_index):
+def open_nested_tab(browser, parent_index):
     if not browser:
         raise ValueError("browser is empty! You cannot create nested tabs")
     
@@ -89,6 +89,15 @@ def Open_nested_tab(browser, parent_index):
     
     print(f"{num_tabs} nested tabs created under the parent tab at index {parent_index}")
 
+#6------------------------------------------------
+def clear_tabs(browser):
+    if not browser: #if there is no browser
+        print("There are no tabs to clear")
+        return
+    
+    browser.clear() #clear the tabs
+    print("All open tabs have been cleared")
+    
             
         
 def main():
@@ -117,14 +126,17 @@ def main():
             
         elif user_input == 3:
              index = int(input("Please enter the index to display content (or press Enter for last tab): "))
-             DisplayTabContent(browser, index)
+             display_tab_content(browser, index)
         
         elif user_input == 4:
             print_titles(browser)
             
         elif user_input == 5:
             parent_index = int(input("Please enter the index of the parent tab: "))
-            Open_nested_tab(browser, parent_index)
+            open_nested_tab(browser, parent_index)
+        
+        elif user_input == 6:
+            clear_tabs(browser)
             
             
         elif user_input == 9:
