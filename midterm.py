@@ -59,6 +59,35 @@ def print_titles(browser):
     else:
         for item in browser:
             print(item['Title'])
+
+                
+#5--------------------------------------------------------
+def Open_nested_tab(browser, parent_index):
+    if not browser:
+        raise ValueError("browser is empty! You cannot create nested tabs")
+    
+    if parent_index is not None and 0 <= parent_index < len(browser):
+        parent_tab = browser[parent_index]  # parent tab
+    else:
+        print("Invalid parent index. Creating nested tabs under the last opened tab.") #by default
+        parent_tab = browser[-1]
+
+    nested_tabs = []
+    num_tabs = int(input("Enter the number of nested tabs you want to create: "))
+    
+    for i in range(num_tabs):
+        title = input(f"Enter the title for nested tab {i + 1}: ")
+        url = input(f"Enter the URL for nested tab {i + 1}: ")
+        new_tab = {'Title': title, 'URL': url} #the new nested tab
+        nested_tabs.append(new_tab)
+
+    if 'NestedTabs' not in parent_tab: # if it is the first nested tab
+        parent_tab['NestedTabs'] = []  # Create the 'NestedTabs' key if not present
+
+    parent_tab['NestedTabs'].extend(nested_tabs)  # Extend the list of nested tabs
+    
+    print(f"{num_tabs} nested tabs created under the parent tab at index {parent_index}")
+
             
         
 def main():
@@ -91,6 +120,11 @@ def main():
         
         elif user_input == 4:
             print_titles(browser)
+            
+        elif user_input == 5:
+            parent_index = int(input("Please enter the index of the parent tab: "))
+            Open_nested_tab(browser, parent_index)
+            
             
         elif user_input == 9:
             break
