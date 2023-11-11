@@ -98,11 +98,33 @@ def clear_tabs(browser):
     browser.clear() #clear the tabs
     print("All open tabs have been cleared")
     
+#7----------------------------------------------
+import json
+def save_tabs(browser, file_path): #ressource: https://www.geeksforgeeks.org/reading-and-writing-json-to-a-file-in-python/
+    if not browser:
+        print("No tabs to save.")
+        return
+
+    with open(file_path, 'w') as file:
+        tabs_data = []
+        for tab in browser:
+            tab_data = {
+                'Title': tab['Title'],
+                'URL': tab.get('URL', ''),
+                'NestedTabs': tab.get('NestedTabs', [])
+            }
+            tabs_data.append(tab_data)
+
+        json.dump(tabs_data, file)
+
+    print(f"Tabs saved to {file_path} successfully.")
+    
+    
             
         
 def main():
     browser = []
-    file = "input.txt"
+    file = "file.json"
     print("Hello user, choose an option from the following options:")
     while True:
         try:
@@ -137,6 +159,9 @@ def main():
         
         elif user_input == 6:
             clear_tabs(browser)
+            
+        elif user_input == 7:
+            save_tabs(browser,file)
             
             
         elif user_input == 9:
