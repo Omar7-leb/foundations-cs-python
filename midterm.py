@@ -100,12 +100,12 @@ def clear_tabs(browser):
     
 #7----------------------------------------------
 import json
-def save_tabs(browser, file_path): #ressource: https://www.geeksforgeeks.org/reading-and-writing-json-to-a-file-in-python/
+def save_tabs(browser, file): #ressource: https://www.geeksforgeeks.org/reading-and-writing-json-to-a-file-in-python/
     if not browser:
         print("No tabs to save.")
         return
 
-    with open(file_path, 'w') as file:
+    with open(file, 'w') as file:
         tabs_data = []
         for tab in browser:
             tab_data = {
@@ -117,10 +117,14 @@ def save_tabs(browser, file_path): #ressource: https://www.geeksforgeeks.org/rea
 
         json.dump(tabs_data, file)
 
-    print(f"Tabs saved to {file_path} successfully.")
+    print(f"Tabs saved to {file} successfully.")
     
-    
-            
+#8----------------------------------------- 
+def import_tabs(file):
+        with open(file, 'r') as file:
+            tabs_data = json.load(file)
+            return tabs_data
+               
         
 def main():
     browser = []
@@ -162,6 +166,12 @@ def main():
             
         elif user_input == 7:
             save_tabs(browser,file)
+            
+        elif user_input == 8:
+            loaded_tabs = import_tabs(file)
+            if loaded_tabs:
+                browser.extend(loaded_tabs)
+                print("Tabs loaded successfully.")
             
             
         elif user_input == 9:
