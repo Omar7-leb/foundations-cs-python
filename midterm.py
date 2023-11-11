@@ -52,6 +52,15 @@ def DisplayTabContent(browser, index=None):
     else:
         print("Invalid index")
         
+#4--------------------------------------------------------
+def print_titles(browser):
+    if not browser:
+        print("No titles to print")
+    else:
+        for item in browser:
+            print(item['Title'])
+            
+        
 def main():
     browser = []
     file = "input.txt"
@@ -79,6 +88,9 @@ def main():
         elif user_input == 3:
              index = int(input("Please enter the index to display content (or press Enter for last tab): "))
              DisplayTabContent(browser, index)
+        
+        elif user_input == 4:
+            print_titles(browser)
             
         elif user_input == 9:
             break
