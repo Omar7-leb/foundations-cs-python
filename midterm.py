@@ -23,12 +23,15 @@ def close_tab(browser, index=None):
     if index is not None and 0 <= index < len(browser):
         browser.remove(browser[index])
         print(f"Tab with index {index} has been closed successfully")
+        
     elif index is None: #if the index field is empty
         if browser:
             browser.remove(browser[-1]) #remove the last tab in the browser
             print("Last tab has been closed successfully")
+            
         else:
             print("No tabs to close.")
+            
     else: #incorrect input
         print("You should enter a correct index")
         
@@ -45,7 +48,7 @@ def display_tab_content(browser, index=None):
     if index is None:
         index = -1  # Display the last opened tab by default
 
-    if 0 <= index < len(browser):
+    if  0 <= index < len(browser):
         tab = browser[index]
         url = tab['URL']
         try:
@@ -152,16 +155,22 @@ def main():
             open_tab(browser, title, url)
         elif user_input == 2:
             try:
-                index = int(input("Please enter the index: "))
+                index = int(input("Please enter the index (or press Enter for the last index): "))
             except ValueError:
-                print("Invalid input for the index. Using the default: closing the last tab.")
+                print("closing the last tab.")
                 index = None
 
             close_tab(browser, index)
             
         elif user_input == 3:
-             index = int(input("Please enter the index to display content (or press Enter for last tab): "))
-             display_tab_content(browser, index)
+            try:
+                index = int(input("Please enter the index to display content (or press Enter for last tab): "))
+            except ValueError:
+                print("displaying the html content of the last tab.")
+                index = None
+                
+            display_tab_content(browser, index)
+             
         
         elif user_input == 4:
             print_titles(browser)
