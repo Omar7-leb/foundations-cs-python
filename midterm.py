@@ -154,10 +154,13 @@ def save_tabs(browser, file): #ressource: https://www.geeksforgeeks.org/reading-
     print(f"Tabs saved to {file} successfully.")
     
 #8----------------------------------------- 
-def import_tabs(file):
+def import_tabs(file): #ressource: https://www.geeksforgeeks.org/reading-and-writing-json-to-a-file-in-python/
+    try:   #ressourrce of exception : https://www.section.io/engineering-education/files-and-exceptions-in-python/
         with open(file, 'r') as file:
             tabs_data = json.load(file)
             return tabs_data
+    except FileNotFoundError:
+        print("Sorry, the file {file} does not exist")
                
         
 def main():
