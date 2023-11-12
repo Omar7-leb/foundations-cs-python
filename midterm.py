@@ -100,6 +100,11 @@ def open_nested_tab(browser, parent_index):
     for i in range(num_tabs):
         title = input(f"Enter the title for nested tab {i + 1}: ")
         url = input(f"Enter the URL for nested tab {i + 1}: ")
+        
+        if not is_valid(url): #if the url is invalid
+          print("Invalid URL. Please enter a valid URL.")
+          return
+      
         new_tab = {'Title': title, 'URL': url} #the new nested tab
         nested_tabs.append(new_tab)
 
@@ -185,8 +190,12 @@ def main():
             print_titles(browser)
             
         elif user_input == 5:
+          try:
             parent_index = int(input("Please enter the index of the parent tab: "))
             open_nested_tab(browser, parent_index)
+          except ValueError:
+            print("Invalid input. Please enter a valid integer.")
+
         
         elif user_input == 6:
             clear_tabs(browser)
