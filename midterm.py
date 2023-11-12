@@ -5,6 +5,10 @@ def is_valid(url): #ressource: https://stackoverflow.com/questions/7160737/how-t
     return validators.url(url)
 
 def open_tab(browser, title, url):
+    if not title :
+        print("Title is empty. Please provide a valid title")
+        return
+    
     if not is_valid(url):
         print("Invalid URL. Please enter a valid URL.")
         return
@@ -18,7 +22,9 @@ def open_tab(browser, title, url):
 #2----------------------------------------------------------------
 def close_tab(browser, index=None):
     if not browser: # if the list is empty
-        raise ValueError("Browser is empty! You cannot close a tab.")
+        print("Browser is empty! There are no tabs to close.")
+        return
+        
     
     if index is not None and 0 <= index < len(browser):
         browser.remove(browser[index])
@@ -28,9 +34,6 @@ def close_tab(browser, index=None):
         if browser:
             browser.remove(browser[-1]) #remove the last tab in the browser
             print("Last tab has been closed successfully")
-            
-        else:
-            print("No tabs to close.")
             
     else: #incorrect input
         print("You should enter a correct index")
