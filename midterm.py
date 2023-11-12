@@ -18,7 +18,7 @@ def open_tab(browser, title, url):
         'URL': url
     }
     browser.append(new_tab) #adding the new tab to the browser
-    print("Tab with title: " + title + " and url: " + url + " has been opened successfully")
+    print(f"Tab with title: {title} and url: {url} has been opened successfully")
 #2----------------------------------------------------------------
 def close_tab(browser, index=None):
     if not browser: # if the list is empty
