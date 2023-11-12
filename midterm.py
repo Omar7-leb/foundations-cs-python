@@ -159,7 +159,7 @@ def save_tabs(browser, file): #ressource: https://www.geeksforgeeks.org/reading-
     
 #8----------------------------------------- 
 def import_tabs(file): #ressource: https://www.geeksforgeeks.org/reading-and-writing-json-to-a-file-in-python/
-    try:   #ressource of try , except exception : https://www.section.io/engineering-education/files-and-exceptions-in-python/
+    try:   #ressource of file exceptions : https://www.section.io/engineering-education/files-and-exceptions-in-python/
         with open(file, 'r') as file:
             tabs_data = json.load(file) # load the tabs data from the file
             return tabs_data
@@ -191,7 +191,7 @@ def main():
             try:
                 index = int(input("Please enter the index (or press Enter for the last index): "))
             except ValueError:
-                print("closing the last tab.")
+                print("Closing the last tab.")
                 index = None
 
             close_tab(browser, index)
@@ -200,7 +200,7 @@ def main():
             try:
                 index = int(input("Please enter the index to display content (or press Enter for last tab): "))
             except ValueError:
-                print("displaying the html content of the last tab.")
+                print("Displaying the html content of the last tab.")
                 index = None
                 
             display_tab_content(browser, index)
