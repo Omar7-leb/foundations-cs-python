@@ -51,16 +51,22 @@ def display_tab_content(browser, index=None):
     if index is None:
         index = -1  # Display the last opened tab by default
 
-    if  0 <= index < len(browser):
+    if  -1 <= index < len(browser):
         tab = browser[index]
         url = tab['URL']
+        
         try:
             response = requests.get(url) #sends an HTTP GET request to the specified URL
             response.raise_for_status()  # Check if the request was successful
             html_content = response.text
-            soup = BeautifulSoup(html_content, 'html.parser') #parse the infos in html format
-            print(f"Displaying content of tab at index {index} with title: {tab['Title']}")
-            print(soup.prettify())  # Print prettified HTML content
+            if html_content:
+                soup = BeautifulSoup(html_content, 'html.parser') #parse the infos in html format
+                print(f"Displaying content of tab at index {index} with title: {tab['Title']}")
+                print(soup.prettify())  # Print prettified HTML content
+                
+            else:
+                print("HTML content is empty")
+            
         except requests.RequestException as e: # class requests contain all the request exceptions  ressources : https://requests.readthedocs.io/en/latest/_modules/requests/exceptions/
             print(e)
     else:
