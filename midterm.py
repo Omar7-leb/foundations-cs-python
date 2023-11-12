@@ -1,3 +1,5 @@
+### please install validators , beautifulsoup and requests libraries to run the code
+
 #1----------------------------------------------------------------
 import validators
 
