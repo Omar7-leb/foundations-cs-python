@@ -75,10 +75,12 @@ def display_tab_content(browser, index=None):
 def print_titles(browser):
     if not browser:
         print("No tabs open")
+   
     else:
         for tab in browser:
             print(f"Parent tab: {tab['Title']}") #print the title of parent tab
             nested_tabs = tab.get('NestedTabs', []) #retrieve the value associated with the key 'NestedTabs' in the dictionary tab 
+            
             for nested_tab in nested_tabs:
                 print(f"  Nested tab: {nested_tab['Title']}") #print the title of nested tabs
            
@@ -89,11 +91,13 @@ def open_nested_tab(browser, parent_index):
     
     if parent_index is not None and 0 <= parent_index < len(browser):
         parent_tab = browser[parent_index]  # parent tab
+    
     else:
         print("Invalid parent index. Creating nested tabs under the last opened tab.") #by default
         parent_tab = browser[-1]
 
     nested_tabs = []
+    
     try:
       num_tabs = int(input("Enter the number of nested tabs you want to create: ")) #number of nested tabs
       
@@ -133,7 +137,6 @@ def clear_tabs(browser):
     
 #7----------------------------------------------
 import json
-import os
 def save_tabs(browser, file): #ressource: https://www.geeksforgeeks.org/reading-and-writing-json-to-a-file-in-python/
     if not browser: #if browser is empty
         print("No tabs to save.")
@@ -160,6 +163,7 @@ def import_tabs(file): #ressource: https://www.geeksforgeeks.org/reading-and-wri
         with open(file, 'r') as file:
             tabs_data = json.load(file) # load the tabs data from the file
             return tabs_data
+        
     except FileNotFoundError:
         print("Sorry, the file {file} does not exist")
         return []
@@ -168,7 +172,9 @@ def import_tabs(file): #ressource: https://www.geeksforgeeks.org/reading-and-wri
 def main():
     browser = []
     file = "file.json"
+    
     print("Hello user, choose an option from the following options:")
+    
     while True:
         try:
             user_input = int(input("1. Open Tab\n2. Close Tab\n3. Switch Tab\n4. Display All Tabs\n5. Open Nested Tab\n6. Clear All Tabs\n7. Save Tabs\n8. Import Tabs\n9. Exit\nPlease choose an option: "))
