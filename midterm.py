@@ -162,6 +162,7 @@ def import_tabs(file): #ressource: https://www.geeksforgeeks.org/reading-and-wri
             return tabs_data
     except FileNotFoundError:
         print("Sorry, the file {file} does not exist")
+        return []
                
         
 def main():
