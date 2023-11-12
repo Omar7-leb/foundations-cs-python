@@ -5,19 +5,19 @@ def is_valid(url): #ressource: https://stackoverflow.com/questions/7160737/how-t
     return validators.url(url)
 
 def open_tab(browser, title, url):
-    if not title :
+    if not title : #if title is empty
         print("Title is empty. Please provide a valid title")
         return
     
-    if not is_valid(url):
+    if not is_valid(url): #if the url is invalid
         print("Invalid URL. Please enter a valid URL.")
         return
 
-    new_tab = {
+    new_tab = {# new tab with title and url
         'Title': title,
         'URL': url
     }
-    browser.append(new_tab)
+    browser.append(new_tab) #adding the new tab to the browser
     print("Tab with title: " + title + " and url: " + url + " has been opened successfully")
 #2----------------------------------------------------------------
 def close_tab(browser, index=None):
@@ -75,13 +75,13 @@ def display_tab_content(browser, index=None):
 #4--------------------------------------------------------
 def print_titles(browser):
     if not browser:
-        print("No titles to print")
+        print("No tabs open")
     else:
         for tab in browser:
-            print(tab['Title']) #print the title of parent tab
+            print(f"Parent tab: {tab['Title']}") #print the title of parent tab
             nested_tabs = tab.get('NestedTabs', []) #retrieve the value associated with the key 'NestedTabs' in the dictionary tab 
             for nested_tab in nested_tabs:
-                print(f"  {nested_tab['Title']}") #print the title of nested tabs
+                print(f"  Nested tab: {nested_tab['Title']}") #print the title of nested tabs
            
 #5--------------------------------------------------------
 def open_nested_tab(browser, parent_index):
