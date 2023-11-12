@@ -145,7 +145,7 @@ def save_tabs(browser, file): #ressource: https://www.geeksforgeeks.org/reading-
         for tab in browser:
             tab_data = {
                 'Title': tab['Title'],
-                'URL': tab.get('URL', ''),
+                'URL': tab['URL'],
                 'NestedTabs': tab.get('NestedTabs', [])
             }
             tabs_data.append(tab_data)
