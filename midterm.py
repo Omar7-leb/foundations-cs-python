@@ -95,8 +95,16 @@ def open_nested_tab(browser, parent_index):
         parent_tab = browser[-1]
 
     nested_tabs = []
-    num_tabs = int(input("Enter the number of nested tabs you want to create: "))
-    
+    try:
+      num_tabs = int(input("Enter the number of nested tabs you want to create: "))
+      
+    except ValueError:
+            print("Invalid input. Please enter a valid integer.")
+            
+    if num_tabs <= 0:
+       print("Number of nested tabs must be a positive integer.")
+       return
+
     for i in range(num_tabs):
         title = input(f"Enter the title for nested tab {i + 1}: ")
         url = input(f"Enter the URL for nested tab {i + 1}: ")
