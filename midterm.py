@@ -31,9 +31,8 @@ def close_tab(browser, index=None):
         print(f"Tab with index {index} has been closed successfully")
 
     elif index is None: #if the index field is empty
-        if browser:
-            del browser[-1] #remove the last tab in the browser
-            print("Last tab has been closed successfully")
+        del browser[-1] #remove the last tab in the browser
+        print("Last tab has been closed successfully")
 
     else: #If the index parameter is provided but is not within the range of the browser list
         print("You should enter a correct index")
