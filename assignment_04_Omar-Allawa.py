@@ -84,22 +84,17 @@ class PriorityQueue:
             self.size -= 1
 
 
+    
+def main():
+    while True:
+        try:
+            user_input = int(input("1. Adding a new task to the task manager.\n2. Getting a task from the queue given a task id\n3. Marking the highest priority task as completed and putting it in the task history.\n4. Displaying all tasks in order of priority.\n5. Displaying only the tasks that are not completed.\n6. Displaying the last completed task.\n7. Exit\nEnter your choice: "))
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+            continue
+
+       
+
 if __name__ == "__main__":
-    task1 = Task("Complete project", 2)
-    task2 = Task("Write report", 1)
-    task3 = Task("Review code", 3)
-
-    pq = PriorityQueue()
-
-    pq.enqueue(task1)
-    pq.enqueue(task2)
-    pq.enqueue(task3)
-    
-    print("before dequeueing tasks")
-    pq.displayQueue()
-    
-    pq.dequeue()
-    print("after dequeueing tasks")
-    pq.displayQueue()
-    
+    main()
     
