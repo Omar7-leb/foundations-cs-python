@@ -31,6 +31,13 @@ class Task:
 class Node:
     def __init__(self, task):
         self.task = task
-        self.next = None           
+        self.next = None    
+        
+class PriorityQueue:
+    def __init__(self):
+        self.header = None
+        self.size = 0       
+        
+    
       
             
