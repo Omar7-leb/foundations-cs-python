@@ -38,6 +38,18 @@ class PriorityQueue:
         self.header = None
         self.size = 0       
         
+    def isEmpty(self):
+        return self.header == None
     
+    def displayQueue(self):
+        current = self.header
+        
+        while(current.next != None):
+            print(f"The id of task :{current.task.get_id()}, Priority :{current.task.get_priority()}, Description :{current.task.get_description()}")
+            current = current.next
+            
+        
+        
+        
       
             
