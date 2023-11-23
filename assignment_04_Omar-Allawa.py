@@ -124,15 +124,32 @@ class Stack:
             
         else:
             print("the top node is:" , self.header.get_description())
+            
+
+class TaskManager:
+    def __init__(self):
+        self.task_queue = PriorityQueue()
+        self.task_history = Stack()
+        
+    def add_task(self, description , priority):
+        task = Task(description, priority)
+        self.task_queue.enqueue(task)
      
     
 def main():
+    task_manager = TaskManager()
+    
     while True:
         try:
             user_input = int(input("1. Adding a new task to the task manager.\n2. Getting a task from the queue given a task id\n3. Marking the highest priority task as completed and putting it in the task history.\n4. Displaying all tasks in order of priority.\n5. Displaying only the tasks that are not completed.\n6. Displaying the last completed task.\n7. Exit\nEnter your choice: "))
         except ValueError:
             print("Invalid input. Please enter a number.")
             continue
+        
+        if user_input == 1:
+            description = input("Enter a description for the task : ")
+            priority = int(input("Enter a priority for the task : "))
+            task_manager.add_task(description, priority)
 
        
 
