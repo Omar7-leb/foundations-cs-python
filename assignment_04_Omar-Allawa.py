@@ -141,13 +141,14 @@ class TaskManager:
         if highest_priority_task:
             highest_priority_task.set_completed()
             self.task_history.push(highest_priority_task)
-        
+            
     
-     
-    
+    #4--------------------------------------------------------
+    def displayInOrder(self):
+         self.task_queue.displayQueue()
+            
 def main():
     task_manager = TaskManager()
-    
     while True:
         try:
             user_input = int(input("1. Adding a new task to the task manager.\n2. Getting a task from the queue given a task id\n3. Marking the highest priority task as completed and putting it in the task history.\n4. Displaying all tasks in order of priority.\n5. Displaying only the tasks that are not completed.\n6. Displaying the last completed task.\n7. Exit\nEnter your choice: "))
@@ -160,11 +161,18 @@ def main():
             priority = int(input("Enter a priority for the task : "))
             task_manager.add_task(description, priority)
         
-        elif user_input ==2:
+        elif user_input == 2:
             task_id = int(input("Enter task Id to get : "))
             task_manager.get_task(task_id).get_description()
             
-        
+        elif user_input == 3:
+            task_manager.highest_priority()
+            
+        elif user_input == 4:
+            task_manager.displayInOrder()
+            
+        elif user_input == 7:
+            break    
 
        
 
