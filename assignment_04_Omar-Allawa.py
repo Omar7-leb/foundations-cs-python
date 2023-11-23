@@ -26,8 +26,8 @@ class Task:
     def get_completed(self):
         return self.completed
 
-    def set_completed(self, completed):
-        self.completed = True
+    def set_completed(self, completed = True):
+        self.completed = completed
 
 
 class Node:
@@ -41,6 +41,7 @@ class PriorityQueue:
         Task.task_id = 0
         self.header = None
         self.size = 0
+        self.completed_stack = []
 
     def isEmpty(self):
         return self.header is None
@@ -49,8 +50,7 @@ class PriorityQueue:
         current = self.header
 
         while current is not None:
-            print(
-                f"The id of task: {current.task.get_task_id()}, Priority: {current.task.get_priority()}, Description: {current.task.get_description()}")
+            print(f"The id of task: {current.task.get_task_id()}, Priority: {current.task.get_priority()}, Description: {current.task.get_description()}")
             current = current.next
 
     def enqueue(self, task):
@@ -91,9 +91,22 @@ class Stack:
         self.size = 0 
     
     def isEmpty(self):
-        return slef.header == None
+        return self.header == None
     
-    
+    def displayStack(self):
+        current = self.header
+        
+        while current is not None:
+            print(f"The task with id {current.task.get_task_id()}, Priority: {current.task.get_priority()}, Description: {current.task.get_description()} has already been completed")
+            current = current.next   
+            
+    def push(self , task): 
+        node = Node(task)
+        node.next = self.header
+        self.header = node
+        self.size += 1
+        
+
 def main():
     while True:
         try:
