@@ -106,7 +106,26 @@ class Stack:
         self.header = node
         self.size += 1
         
-
+    def pop(self):
+        
+        if self.isEmpty():
+            print("There are not tasks to pop it")
+        
+        else:
+            temp = self.header
+            self.header = self.header.next
+            temp.next = None
+            self.size -= 1
+            return temp.task.get_description()
+    
+    def peek(self):
+        if self.isEmpty():
+            print("there are no tasks to peek")
+            
+        else:
+            print("the top node is:" , self.header.get_description())
+     
+    
 def main():
     while True:
         try:
