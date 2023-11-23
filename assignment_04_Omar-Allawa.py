@@ -84,6 +84,15 @@ class PriorityQueue:
             self.size -= 1
 
 
+class Stack:
+    
+    def __init__(self):
+        self.header = None
+        self.size = 0 
+    
+    def isEmpty(self):
+        return slef.header == None
+    
     
 def main():
     while True:
