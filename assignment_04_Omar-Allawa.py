@@ -130,10 +130,19 @@ class TaskManager:
     def __init__(self):
         self.task_queue = PriorityQueue()
         self.task_history = Stack()
-        
+    #1--------------------------------------------------------    
     def add_task(self, description , priority):
         task = Task(description, priority)
         self.task_queue.enqueue(task)
+        
+    #3--------------------------------------------------------
+    def highest_priority(self):
+        highest_priority_task = self.task_queue.dequeue()
+        if highest_priority_task:
+            highest_priority_task.set_completed()
+            self.task_history.push(highest_priority_task)
+        
+    
      
     
 def main():
@@ -150,6 +159,12 @@ def main():
             description = input("Enter a description for the task : ")
             priority = int(input("Enter a priority for the task : "))
             task_manager.add_task(description, priority)
+        
+        elif user_input ==2:
+            task_id = int(input("Enter task Id to get : "))
+            task_manager.get_task(task_id).get_description()
+            
+        
 
        
 
