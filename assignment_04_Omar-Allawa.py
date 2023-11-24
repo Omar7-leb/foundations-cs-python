@@ -94,7 +94,7 @@ class Stack:
         current = self.header
         
         while current is not None:
-            print(f"The task with id {current.task.get_task_id()}, Priority: {current.task.get_priority()}, Description: {current.task.get_description()}")
+            print(f"The id of task: {current.task.get_task_id()}, Priority: {current.task.get_priority()}, Description: {current.task.get_description()}")
             current = current.next   
             
     def push(self , task): 
@@ -210,6 +210,8 @@ def main():
         elif user_input == 7:
             print("Exiting!!")
             break    
+        else:
+            print("Invalid input , choose a nb from 1 to 7")
 
 
 if __name__ == "__main__":
