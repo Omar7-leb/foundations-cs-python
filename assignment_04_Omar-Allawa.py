@@ -41,8 +41,7 @@ class PriorityQueue:
         Task.task_id = 0
         self.header = None
         self.size = 0
-        self.completed_stack = []
-
+        
     def isEmpty(self):
         return self.header is None
 
@@ -69,19 +68,17 @@ class PriorityQueue:
             current.next = node
 
         self.size += 1
-
+        
     def dequeue(self):
         if self.isEmpty():
-            print("Your queue is empty! Enqueue first.")
-        elif self.size == 1:
-            print("We are removing the first task")
-            self.header = None
-            self.size -= 1
-        else:
-            current = self.header
-            self.header = self.header.next
-            current.next = None
-            self.size -= 1
+            return None
+
+        current = self.header
+        self.header = self.header.next
+        current.next = None
+        self.size -= 1
+        return current.task
+
 
 
 class Stack:
@@ -97,7 +94,7 @@ class Stack:
         current = self.header
         
         while current is not None:
-            print(f"The task with id {current.task.get_task_id()}, Priority: {current.task.get_priority()}, Description: {current.task.get_description()} has already been completed")
+            print(f"The task with id {current.task.get_task_id()}, Priority: {current.task.get_priority()}, Description: {current.task.get_description()}")
             current = current.next   
             
     def push(self , task): 
@@ -152,9 +149,17 @@ class TaskManager:
             highest_priority_task.set_completed()
             self.task_history.push(highest_priority_task)
             
-    
-    #5--------------------------------------------------------
+    #4--------------------------------------------------------
     def displayInOrder(self):
+        if self.task_queue.isEmpty() and self.task_history.isEmpty():
+           print("No tasks")
+        else:
+            print("All tasks:")
+            self.task_history.displayStack()
+            self.task_queue.displayQueue()
+            
+    #5--------------------------------------------------------
+    def displayIncompletedtasks(self):
         if self.task_queue.isEmpty():
             print("No tasks")
         else:
@@ -196,8 +201,8 @@ def main():
             task_manager.displayInOrder()
             
         elif user_input == 5:
-            print("the incompleted tasks are :\n ")
-            task_manager.displayInOrder()
+            print("the incompleted tasks are : ")
+            task_manager.displayIncompletedtasks()
             
         elif user_input == 6:
             task_manager.display_last_completed_task()
@@ -206,7 +211,6 @@ def main():
             print("Exiting!!")
             break    
 
-       
 
 if __name__ == "__main__":
     main()
