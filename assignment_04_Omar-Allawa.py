@@ -91,7 +91,7 @@ class Stack:
         self.size = 0 
     
     def isEmpty(self):
-        return self.header == None
+        return self.header is None
     
     def displayStack(self):
         current = self.header
@@ -116,14 +116,14 @@ class Stack:
             self.header = self.header.next
             temp.next = None
             self.size -= 1
-            return temp.task.get_description()
+            return temp.task
     
     def peek(self):
         if self.isEmpty():
-            print("there are no tasks to peek")
-            
+            print("There are no tasks to peek")
         else:
-            print("the top node is:" , self.header.get_description())
+            return self.header.task
+
             
 
 class TaskManager:
@@ -135,6 +135,16 @@ class TaskManager:
         task = Task(description, priority)
         self.task_queue.enqueue(task)
         
+    #2--------------------------------------------------------
+    def get_task_by_id(self, task_id):
+        current = self.task_queue.header
+        while current is not None:
+            if current.task.get_task_id() == task_id:
+                return current.task
+            current = current.next
+        print(f"No task with id : {task_id}")
+        return None
+        
     #3--------------------------------------------------------
     def highest_priority(self):
         highest_priority_task = self.task_queue.dequeue()
@@ -143,9 +153,19 @@ class TaskManager:
             self.task_history.push(highest_priority_task)
             
     
-    #4--------------------------------------------------------
+    #5--------------------------------------------------------
     def displayInOrder(self):
-         self.task_queue.displayQueue()
+        if self.task_queue.isEmpty():
+            print("No tasks")
+        else:
+            self.task_queue.displayQueue()
+         
+    #6--------------------------------------------------------
+    def display_last_completed_task(self):
+        print("The last completed task is:")
+        completed_task = self.task_history.peek()
+        if completed_task:
+            print(f"ID: {completed_task.get_task_id()}, Priority: {completed_task.get_priority()}, Description: {completed_task.get_description()}")
             
 def main():
     task_manager = TaskManager()
@@ -157,13 +177,17 @@ def main():
             continue
         
         if user_input == 1:
+            
             description = input("Enter a description for the task : ")
             priority = int(input("Enter a priority for the task : "))
             task_manager.add_task(description, priority)
         
         elif user_input == 2:
             task_id = int(input("Enter task Id to get : "))
-            task_manager.get_task(task_id).get_description()
+            task = task_manager.get_task_by_id(task_id)
+            if task:
+                print(f"Task ID: {task.get_task_id()} , priority: {task.get_priority()}, description: {task.get_description()}")
+           
             
         elif user_input == 3:
             task_manager.highest_priority()
@@ -171,7 +195,15 @@ def main():
         elif user_input == 4:
             task_manager.displayInOrder()
             
+        elif user_input == 5:
+            print("the incompleted tasks are :\n ")
+            task_manager.displayInOrder()
+            
+        elif user_input == 6:
+            task_manager.display_last_completed_task()
+            
         elif user_input == 7:
+            print("Exiting!!")
             break    
 
        
