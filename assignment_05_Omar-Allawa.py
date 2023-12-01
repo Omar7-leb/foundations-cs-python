@@ -9,7 +9,7 @@ class Node:
 class Family_tree:
     def __init__(self):
         self.root = None
-
+     #1--------------------------------
     def insert(self, name, family_name, birthdate):
         if self.root is None:
             self.root = Node(name, family_name, birthdate)
@@ -29,7 +29,8 @@ class Family_tree:
                     else:
                         current = current.right
             print("A family member added to the tree with name", name)
-
+            
+    #2--------------------------------
     def display_sorted_birthdays(self, node):
         if node is None:
             return
@@ -37,6 +38,26 @@ class Family_tree:
         self.display_sorted_birthdays(node.left)
         print(f"{node.name} {node.family_name}: {node.birthdate}")
         self.display_sorted_birthdays(node.right)
+    
+        
+    #5-------------------------------
+    def count_same_first_names(self, node, name):
+        if node is None:
+          return 0
+
+        count = 0
+        
+        if node.name == name:
+          count += 1
+
+        count += self.count_same_first_names(node.left, name)
+        count += self.count_same_first_names(node.right, name)
+
+        return count
+            
+        
+        
+    
 
 def main():
     member = Family_tree()
@@ -54,6 +75,15 @@ def main():
         elif user_input == 2:
             print("Sorted Birthdays:")
             member.display_sorted_birthdays(member.root)
+            
+        elif user_input == 5:
+           first_name_to_count = input("Enter the first name to count: ")
+           count = member.count_same_first_names(member.root, first_name_to_count)
+           print(f"Number of family members with the same first name ({first_name_to_count}): {count}")
+            
+        elif user_input == 6:
+            print("Exiting...")
+            break
 
 if __name__ == "__main__":
     main()
