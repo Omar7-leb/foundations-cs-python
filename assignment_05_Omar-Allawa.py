@@ -1,66 +1,57 @@
-class Node:
+class TreeNode:
     def __init__(self, name, family_name, birthdate):
-        self.right = None
-        self.left = None
+        self.children = []
         self.name = name
         self.family_name = family_name
         self.birthdate = birthdate
 
-class Family_tree:
+class FamilyTree:
     def __init__(self):
         self.root = None
-     #1--------------------------------
+    
     def insert(self, name, family_name, birthdate):
         if self.root is None:
-            self.root = Node(name, family_name, birthdate)
+            self.root = TreeNode(name, family_name, birthdate)
         else:
             current = self.root
-            while current:
-                if birthdate < current.birthdate:
-                    if current.left is None:
-                        current.left = Node(name, family_name, birthdate)
-                        break
-                    else:
-                        current = current.left
-                else:
-                    if current.right is None:
-                        current.right = Node(name, family_name, birthdate)
-                        break
-                    else:
-                        current = current.right
+            current.children.append(TreeNode(name, family_name, birthdate))
             print("A family member added to the tree with name", name)
             
-    #2--------------------------------
     def display_sorted_birthdays(self, node):
         if node is None:
             return
 
-        self.display_sorted_birthdays(node.left)
+        for child in node.children:
+            self.display_sorted_birthdays(child)
+            
         print(f"{node.name} {node.family_name}: {node.birthdate}")
-        self.display_sorted_birthdays(node.right)
     
-        
-    #5-------------------------------
-    def count_same_first_names(self, node, name):
-        if node is None:
-          return 0
+    def visualize_tree(self, node, dot=None):
+        if dot is None:
+            dot = Digraph(comment='Tree')
 
+        if node:
+            dot.node(f"{node.name}_{node.birthdate}", label=f"{node.name}\n{node.birthdate}")
+
+            for child in node.children:
+                dot = self.visualize_tree(child, dot)
+                dot.edge(f"{node.name}_{node.birthdate}", f"{child.name}_{child.birthdate}")
+
+        return dot
+    
+    def count_same_first_names(self, node, name):
         count = 0
         
         if node.name == name:
-          count += 1
+            count += 1
 
-        count += self.count_same_first_names(node.left, name)
-        count += self.count_same_first_names(node.right, name)
+        for child in node.children:
+            count += self.count_same_first_names(child, name)
 
         return count
-            
-        
-        
-    
 
 def main():
-    member = Family_tree()
+    member = FamilyTree()
     print("Hello, there are a list of choices:")
     while True:
         user_input = int(input(
@@ -76,10 +67,14 @@ def main():
             print("Sorted Birthdays:")
             member.display_sorted_birthdays(member.root)
             
+        elif user_input == 4:
+            dot = member.visualize_tree(member.root)
+            dot.render("tree", format="png", cleanup=True)
+            
         elif user_input == 5:
-           first_name_to_count = input("Enter the first name to count: ")
-           count = member.count_same_first_names(member.root, first_name_to_count)
-           print(f"Number of family members with the same first name ({first_name_to_count}): {count}")
+            first_name_to_count = input("Enter the first name to count: ")
+            count = member.count_same_first_names(member.root, first_name_to_count)
+            print(f"Number of family members with the same first name ({first_name_to_count}): {count}")
             
         elif user_input == 6:
             print("Exiting...")
