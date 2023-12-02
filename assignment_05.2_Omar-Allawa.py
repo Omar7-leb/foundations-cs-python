@@ -49,6 +49,20 @@ class Graph:
                
                self.graph[index1][index2] = 0
                self.graph[index2][index1] = 0
+               
+    def display_listoffriends(self):
+        users = sorted(self.users.keys())
+        matrix = [[0] * len(users) for _ in range(len(users))]
+
+        for i, row in enumerate(self.graph):
+           for j, value in enumerate(row):
+               matrix[i][j] = value
+               
+        print("Connections:")
+        for i, row in enumerate(matrix):
+            print(users[i], " ".join(map(str, row)))
+               
+            
                          
     def displayusers(self):
         users = sorted(self.users.keys())
@@ -85,10 +99,17 @@ def main():
         elif user_input == 4:
             username1 = input("Enter the 1st username : ")
             username2 = input("Enter the 2nd username : ") 
-            socialmedia.remove_friend_request(username1, username2)
+            socialmedia.remove_friend(username1, username2)
+            
+        elif user_input == 5:
+            socialmedia.display_listoffriends()
         
         elif user_input == 6:
             socialmedia.displayusers()
+            
+        elif user_input == 7:
+            print("Exiting")
+            break
             
 
 if __name__ == "__main__":
