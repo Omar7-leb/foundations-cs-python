@@ -40,7 +40,16 @@ class Graph:
             
             self.graph[index1][index2] = 1
             self.graph[index2][index1] = 1
-                    
+        
+    def remove_friend(self , username1, username2):
+        
+        if username1 in self.users and username2 in self.users:
+               index1 = self.users[username1]
+               index2 = self.users[username2]
+               
+               self.graph[index1][index2] = 0
+               self.graph[index2][index1] = 0
+                         
     def displayusers(self):
         users = sorted(self.users.keys())
         matrix = [[0] * len(users) for _ in range(len(users))]
@@ -51,6 +60,7 @@ class Graph:
 
         print("Users:")
         print(" ".join(users))
+        
                 
             
 
@@ -72,6 +82,11 @@ def main():
             username2 = input("Enter the 2nd username : ")
             socialmedia.send_friend_request(username1, username2)
             
+        elif user_input == 4:
+            username1 = input("Enter the 1st username : ")
+            username2 = input("Enter the 2nd username : ") 
+            socialmedia.remove_friend_request(username1, username2)
+        
         elif user_input == 6:
             socialmedia.displayusers()
             
