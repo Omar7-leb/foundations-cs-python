@@ -1,5 +1,13 @@
+class Graph:
+    def __init__(self):
+        self.graph = {}
 
-
+    def add_user(self ,user_id):
+        if user_id in self.graph:
+            print(f"User already exists")
+        else:
+            self.graph[user_id] =[]
+        
 def main() :
     print("Hello, there are a list of choices:")
     while True :
