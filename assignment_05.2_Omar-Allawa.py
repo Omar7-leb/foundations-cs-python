@@ -12,6 +12,29 @@ class Graph:
                 row.append(0)
             self.graph.append([0] * (len(self.graph) + 1))
         return self
+    
+    def remove_user(self, username):
+        
+        if username not in self.users:
+            print(f"User does not exist")
+            return
+        else:
+            index = self.users[username]
+            
+            del self.users[username]
+            
+            del self.graph[index]
+            
+            for row in self.graph:
+                del row[index]
+                
+            for key , value in self.users.items():
+                if value > index:
+                    self.users[key] = value - 1
+        
+            
+    
+    
 
 def main():
     socialmedia = Graph()
@@ -21,6 +44,10 @@ def main():
         if user_input == 1:
             username = input("Enter the username to add:")
             socialmedia.add_user(username)
+            
+        elif user_input == 2:
+            username = input("Enter the username to remove:")
+            socialmedia.remove_user(username)
 
 if __name__ == "__main__":
     main()
