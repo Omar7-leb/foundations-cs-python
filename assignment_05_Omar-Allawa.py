@@ -1,3 +1,4 @@
+from graphviz import Digraph
 class TreeNode:
     def __init__(self, name, family_name, birthdate):
         self.children = []
@@ -26,18 +27,6 @@ class FamilyTree:
             
         print(f"{node.name} {node.family_name}: {node.birthdate}")
     
-    def visualize_tree(self, node, dot=None):
-        if dot is None:
-            dot = Digraph(comment='Tree')
-
-        if node:
-            dot.node(f"{node.name}_{node.birthdate}", label=f"{node.name}\n{node.birthdate}")
-
-            for child in node.children:
-                dot = self.visualize_tree(child, dot)
-                dot.edge(f"{node.name}_{node.birthdate}", f"{child.name}_{child.birthdate}")
-
-        return dot
     
     def count_same_first_names(self, node, name):
         count = 0
@@ -67,9 +56,6 @@ def main():
             print("Sorted Birthdays:")
             member.display_sorted_birthdays(member.root)
             
-        elif user_input == 4:
-            dot = member.visualize_tree(member.root)
-            dot.render("tree", format="png", cleanup=True)
             
         elif user_input == 5:
             first_name_to_count = input("Enter the first name to count: ")
