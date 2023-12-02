@@ -31,10 +31,19 @@ class Graph:
             for key , value in self.users.items():
                 if value > index:
                     self.users[key] = value - 1
-        
+                    
+    def displayusers(self):
+        users = sorted(self.users.keys())
+        matrix = [[0] * len(users) for _ in range(len(users))]
+
+        for i, row in enumerate(self.graph):
+           for j, value in enumerate(row):
+               matrix[i][j] = value
+
+        print("Users:")
+        print(" ".join(users))
+                
             
-    
-    
 
 def main():
     socialmedia = Graph()
@@ -48,6 +57,10 @@ def main():
         elif user_input == 2:
             username = input("Enter the username to remove:")
             socialmedia.remove_user(username)
+            
+        elif user_input == 6:
+            socialmedia.displayusers()
+            
 
 if __name__ == "__main__":
     main()
