@@ -31,6 +31,15 @@ class Graph:
             for key , value in self.users.items():
                 if value > index:
                     self.users[key] = value - 1
+    
+    def send_friend_request(self , username1, username2):
+        
+        if username1 in self.users and username2 in self.users:
+            index1 = self.users[username1]
+            index2 = self.users[username2]
+            
+            self.graph[index1][index2] = 1
+            self.graph[index2][index1] = 1
                     
     def displayusers(self):
         users = sorted(self.users.keys())
@@ -57,6 +66,11 @@ def main():
         elif user_input == 2:
             username = input("Enter the username to remove:")
             socialmedia.remove_user(username)
+            
+        elif user_input == 3:
+            username1 = input("Enter the 1st username : ")
+            username2 = input("Enter the 2nd username : ")
+            socialmedia.send_friend_request(username1, username2)
             
         elif user_input == 6:
             socialmedia.displayusers()
