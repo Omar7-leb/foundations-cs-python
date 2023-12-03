@@ -17,15 +17,16 @@ class FamilyTree:
             current = self.root
             current.children.append(TreeNode(name, family_name, birthdate))
             print("A family member added to the tree with name", name)
-            
     def display_sorted_birthdays(self, node):
         if node is None:
-            return
+          return []
 
+        birthdays = []
         for child in node.children:
-            self.display_sorted_birthdays(child)
+            birthdays.extend(self.display_sorted_birthdays(child))
             
-        print(f"{node.name} {node.family_name}: {node.birthdate}")
+        birthdays.append((node.name, node.family_name, node.birthdate))
+        return sorted(birthdays, key=lambda x: x[2])
     
     
     def count_same_first_names(self, node, name):
@@ -54,7 +55,9 @@ def main():
 
         elif user_input == 2:
             print("Sorted Birthdays:")
-            member.display_sorted_birthdays(member.root)
+            sorted_birthdays = member.display_sorted_birthdays(member.root)
+            for name, family_name, birthdate in sorted_birthdays:
+                print(f"{name} {family_name}: {birthdate}")
             
             
         elif user_input == 5:
@@ -65,6 +68,10 @@ def main():
         elif user_input == 6:
             print("Exiting...")
             break
-
+        
+        else:
+            print("Invalid input")
+            
+            
 if __name__ == "__main__":
     main()
